@@ -1,51 +1,45 @@
-let player = prompt('What are you going to play?');
-let choice = [ 'rock', 'paper', 'scissors']
-let wins_player = 0;
-let wins_computer = 0;
-
-
-while (wins_player < 6 || wins_computer < 6) {
+function getComputerChoice() {
+    let choice = [ 'rock', 'paper', 'scissors']
     let index = Math.floor(Math.random() * computer.length);
-    let computer = choice[index];
-    let player = prompt('What are you going to play?');
-    if (player === 'rock') {
-        if (computer === 'rock') {
-            print ('tie');
+    return choice[index];
+}
+
+
+let player_wins = 0;
+let computer_wins = 0;
+
+function oneRound(playerSelection, computerSelection) {
+    if (playerSelection === 'rock') {
+        if (computerSelection === 'rock') {
+            return 'It is a tie! No one wins.';
         }
-        if (computer === 'paper') {
-            print ('You lose!');
-            wins_computer++;
+        if (computerSelection === 'paper') {
+            return 'You lose! Paper beats rock.';
         }
-        if (computer === 'scissors') {
-            print ('You win');
-            wins_player++;
-        }
-    }
-    else if (player === 'paper') {
-        if (computer === 'rock') {
-            print ('You win')
-            wins_player++
-        }
-        if (computer === 'paper') {
-            print ('tie')
-        }
-        if (computer === 'scissors') {
-            print ('You lose!')
-            wins_computer++
+        if (computerSelection === 'scissors') {
+            return 'You win! Rock beats scissors.';
         }
     }
-    else if (palyer === 'scissors') {
-        if (computer === 'rock') {
-            print ('You lose!')
-            wins_computer++
+    else if (playerSelection === 'paper') {
+        if (computerSelection === 'rock') {
+            return 'You win! Paper beats rock.';
         }
-        if (computer === 'paper') {
-            print ('You win')
-            wins_player++
-            
+        if (computerSelection === 'paper') {
+            return 'It is a tie! No one wins.';
         }
-        if (computer === 'scissors') {
-            print ('tie')
+        if (computerSelection === 'scissors') {
+            return 'You lose! Scissors beat paper.';
+        }
+    }
+    else if (playerSelection === 'scissors') {
+        if (computerSelection === 'rock') {
+            return 'You lose! Rock beats scissors.';
+        }
+        if (computerSelection === 'paper') {
+            return 'You win! Scissors beat paper.';
+        }
+        if (computerSelection === 'scissors') {
+            return 'It is a tie! No one wins.';
         }
     }
     else {
@@ -53,9 +47,24 @@ while (wins_player < 6 || wins_computer < 6) {
     }
 }
 
-if (player_wins == 5) {
-    print('You have won the game!')
+function game() {
+    while  (player_wins && computer_wins <5) {
+        let computerSelection = getComputerChoice();
+        let playerSelection = str(prompt('Enter your move: ')).toLowerCase();
+        if ((oneRound(playerSelection, computerSelection)).slice(4,7) == 'win') {
+            player_wins++
+        } 
+        else if ((oneRound(playerSelection, computerSelection)).slice(4,8) == 'lose') {
+            computer_wins++
+        }
+    }
+    if (player_wins == 5) {
+        print('You win 5 to ', str(computer_wins), ' . Congratulations!')
+    }
+    else {
+        print('You lose ', player_wins, ' to 5. Congratulations!')
+    }
+    
 }
-else if (computer_wins == 5) {
-    print('The computer won the game...')
-}
+
+  
