@@ -1,70 +1,74 @@
+const choice = ['rock','paper','scissors']
+const winners = []
+
+
 function getComputerChoice() {
-    let choice = [ 'rock', 'paper', 'scissors']
-    let index = Math.floor(Math.random() * computer.length);
+    let index = Math.floor(Math.random() * 3);
     return choice[index];
 }
 
+function getPlayerChoice() {
+    let input = prompt('Enter your move: Rock, Paper or Scissors? ');
+    while (input == null) {
+        input = prompt('Enter your move: Rock, Paper or Scissors? ');
+    }
+    input = input.toLowerCase()
+    while (!choice.includes(input)) {
+        input = prompt('Enter your move: Rock, Paper or Scissors? Spelling needs to be exact.')
+        while (input == null) {
+            input = prompt('Enter your move: Rock, Paper or Scissors? ');
+        }
+        input = input.toLowerCase()
+    }
+    return input 
+}
 
 let player_wins = 0;
 let computer_wins = 0;
 
-function oneRound(playerSelection, computerSelection) {
-    if (playerSelection === 'rock') {
-        if (computerSelection === 'rock') {
-            return 'It is a tie! No one wins.';
-        }
-        if (computerSelection === 'paper') {
-            return 'You lose! Paper beats rock.';
-        }
-        if (computerSelection === 'scissors') {
-            return 'You win! Rock beats scissors.';
-        }
+function oneRound(playerSelection, computerSelection) {  
+    if (playerSelection === computerSelection) {
+        return "Tie"
     }
-    else if (playerSelection === 'paper') {
-        if (computerSelection === 'rock') {
-            return 'You win! Paper beats rock.';
+    else if ((playerSelection === 'rock' && computerSelection ==='scissors') ||
+    (playerSelection == 'paper' && computerSelection === 'rock') ||
+    (playerSelection == 'scissors' && computerSelection === 'paper')) {
+        return 'Player'
         }
-        if (computerSelection === 'paper') {
-            return 'It is a tie! No one wins.';
-        }
-        if (computerSelection === 'scissors') {
-            return 'You lose! Scissors beat paper.';
-        }
-    }
-    else if (playerSelection === 'scissors') {
-        if (computerSelection === 'rock') {
-            return 'You lose! Rock beats scissors.';
-        }
-        if (computerSelection === 'paper') {
-            return 'You win! Scissors beat paper.';
-        }
-        if (computerSelection === 'scissors') {
-            return 'It is a tie! No one wins.';
-        }
-    }
     else {
-        print('Please enter a valid input!');
+        return 'Computer'
     }
-}
+    }
 
+function playRound(round) {
+    let playerSelection = getPlayerChoice();
+    let computerSelection = getComputerChoice();
+    let winner = oneRound(playerSelection, computerSelection);
+    winners.push(winner)
+    logRound(playerSelection, computerSelection, winner, round);
+}
 function game() {
-    while  (player_wins && computer_wins <5) {
-        let computerSelection = getComputerChoice();
-        let playerSelection = str(prompt('Enter your move: ')).toLowerCase();
-        if ((oneRound(playerSelection, computerSelection)).slice(4,7) == 'win') {
-            player_wins++
-        } 
-        else if ((oneRound(playerSelection, computerSelection)).slice(4,8) == 'lose') {
-            computer_wins++
-        }
+    for (let i = 1; i <=5; i++) { 
+        playRound(i)    
     }
-    if (player_wins == 5) {
-        print('You win 5 to ', str(computer_wins), ' . Congratulations!')
-    }
-    else {
-        print('You lose ', player_wins, ' to 5. Congratulations!')
-    }
-    
+    document.querySelector('button').textContent = 'Play new game';
+    countWins()
 }
 
-  
+function countWins() {
+    let playerWins = winners.filter((element) => element == 'Player').length;
+    let computerWins = winners.filter((element) => element == 'Computer').length;
+    let ties = winners.filter((element) => element == 'Tie').length;
+    console.log('Results: ');
+    console.log('Player wins: ', playerWins)
+    console.log('Computer wins: ', computerWins);
+    console.log('Ties: ', ties);
+}
+
+function logRound(playerSelection, computerSelection, winner, round) {
+    console.log('Round: ', round)
+    console.log("Player's choice: ", playerSelection);
+    console.log("Computer's choice: ", computerSelection);
+    console.log(winner, ' won the round.');
+    console.log('------------------------')
+}
