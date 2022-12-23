@@ -3,4 +3,4 @@
 This project was done following the curriculum of The Odin Project. It helped me improve my knowledge of JavaScript, the DOM and about User Interface.
 
 
-![rps UI](https://user-images.githubusercontent.com/113156316/198925465-5afb963d-9b39-4087-aa33-a1cc13393e95.png)
+![Screenshot from 2022-12-22 23-04-28](https://user-images.githubusercontent.com/113156316/209269081-19ea476b-39a9-44f0-b179-34cde7e87dc4.png)
